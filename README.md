@@ -1,2 +1,2 @@
-# snake_in_the_grass
+# snake_game
 Snake game built in python with multiple different difficulties
