@@ -1,6 +1,6 @@
 # Kyle Arrowood
 # 5/14/2020
-# I watched Tech With Tim's video for some help with the snake body and turning
+# Snake Game
 
 import pygame
 import random
@@ -31,7 +31,7 @@ class square:
         length = width / rows
         x = self.point[0]
         y = self.point[1]
-        pygame.draw.rect(window, (0, 0, 0), (int(x * length), int(y * length), int(length), int(length)))
+        pygame.draw.rect(window, (0, 100, 0), (int(x * length), int(y * length), int(length), int(length)))
     def move_square(self, x_direction, y_direction):
         self.x_direction = x_direction
         self.y_direction = y_direction
@@ -48,6 +48,7 @@ class snake:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                quit()
             pressed = pygame.key.get_pressed()
             for key in pressed:
                 if pressed[pygame.K_LEFT]:
@@ -108,28 +109,33 @@ class snake:
         for sq in self.body:
             sq.draw_square()
 def refresh(food, snake):
-    window.fill((17, 194, 106))
+    window.fill((153, 204, 255))
     food.draw_square()
     snake.draw_snake()
     pygame.display.update()
 class difficulty_message:
     def __init__(self):
         self.speed = 0
+        self.message = ""
     def show_window(self):
         window = Tk()
         window.title("Choose a difficult:")
         label = Label(window, text = "Choose a difficulty:")
         def easy_cb():
             self.speed = 45
+            self.message = "Easy"
             window.destroy()
         def medium_cb():
             self.speed = 35
+            self.message = "Medium"
             window.destroy()
         def hard_cb():
             self.speed = 25
+            self.message = "Hard"
             window.destroy()
         def extreme_cb():
             self.speed = 15
+            self.message = "Extreme"
             window.destroy()
         button1 = Button(window, text = "Easy", command = easy_cb)
         button2 = Button(window, text = "Medium", command = medium_cb)
@@ -160,10 +166,10 @@ def goodbye_message(score):
     no.pack()
     window.mainloop()
 def main():
-    score = 1
-    pygame.display.set_caption("Snake!  Score: " + str(score))
+    score = 0
+    pygame.display.set_caption("Snake Game!")
     # Fills window with white
-    window.fill((17, 194, 106))
+    window.fill((153, 204, 255))
     # Starting point of food
     start = (random.randrange(1, rows), random.randrange(1, rows))
     foo = food(start)
@@ -182,11 +188,12 @@ def main():
         pygame.time.delay(dif.speed)
         sn.move_snake(score)
         if sn.body[0].point == foo.starting_point:
-            sn.add_link()
+            for i in range(10):
+                sn.add_link()
             start = (random.randrange(1, rows), random.randrange(1, rows))
             foo = food(start)
             foo.draw_square()
-            score += 1
-            pygame.display.set_caption("Snake!  Score: " + str(score))
+            score += 10
+            pygame.display.set_caption("Snake: " + dif.message + " Score: " + str(score))
         refresh(foo, sn)
 main()
