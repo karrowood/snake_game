@@ -10,15 +10,17 @@ from tkinter import messagebox as mb
 pygame.init()
 
 # Global Variables
-width = 500
-rows = 100
-window = pygame.display.set_mode([width, width])
+width = 1000 
+height = 600
+rows = 60
+columns = 100
+window = pygame.display.set_mode([width, height])
 
 class food:
     def __init__(self, starting_point):
         self.starting_point = starting_point
     def draw_square(self):
-        length = width / rows
+        length = width / columns
         x = self.starting_point[0]
         y = self.starting_point[1]
         pygame.draw.rect(window, (255, 0, 0), (int(x * length), int(y * length), int(length), int(length)))
@@ -28,7 +30,7 @@ class square:
         self.x_direction = x_direction
         self.y_direction = y_direction
     def draw_square(self):
-        length = width / rows
+        length = width / columns
         x = self.point[0]
         y = self.point[1]
         pygame.draw.rect(window, (0, 100, 0), (int(x * length), int(y * length), int(length), int(length)))
@@ -83,9 +85,9 @@ class snake:
                     if self.body[0].point == self.body[j].point:
                         goodbye_message(score)
                 # Checks if snake hits edges
-                if sq.x_direction == -1 and sq.point[0] <= 0:
+                if sq.x_direction == -1 and sq.point[0] <= 0: # Left Wall
                     goodbye_message(score)
-                elif sq.x_direction == 1 and sq.point[0] >= rows - 1:
+                elif sq.x_direction == 1 and sq.point[0] >= columns - 1: # Right Wall
                     goodbye_message(score)
                 elif sq.y_direction == 1 and sq.point[1] >= rows - 1:
                     goodbye_message(score)
