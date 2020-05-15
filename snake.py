@@ -1,6 +1,6 @@
 # Kyle Arrowood
-# 5/14/2020
-# Snake Game
+# 5/15/2020
+# Snake_Game
 
 import pygame
 import random
@@ -124,19 +124,19 @@ class difficulty_message:
         window.title("Choose a difficult:")
         label = Label(window, text = "Choose a difficulty:")
         def easy_cb():
-            self.speed = 45
+            self.speed = 20
             self.message = "Easy"
             window.destroy()
         def medium_cb():
-            self.speed = 35
+            self.speed = 30
             self.message = "Medium"
             window.destroy()
         def hard_cb():
-            self.speed = 25
+            self.speed = 45
             self.message = "Hard"
             window.destroy()
         def extreme_cb():
-            self.speed = 15
+            self.speed = 100
             self.message = "Extreme"
             window.destroy()
         button1 = Button(window, text = "Easy", command = easy_cb)
@@ -173,7 +173,7 @@ def main():
     # Fills window with white
     window.fill((153, 204, 255))
     # Starting point of food
-    start = (random.randrange(1, rows), random.randrange(1, rows))
+    start = (random.randrange(1, columns), random.randrange(1, rows))
     foo = food(start)
     foo.draw_square()
     # Creates a head square object and a snake
@@ -185,14 +185,16 @@ def main():
     dif = difficulty_message()
     dif.show_window()
     # Game Loop
+    clock = pygame.time.Clock()
     running = True
     while running:
-        pygame.time.delay(dif.speed)
+        pygame.time.delay(10)
+        clock.tick(dif.speed)
         sn.move_snake(score)
         if sn.body[0].point == foo.starting_point:
             for i in range(10):
                 sn.add_link()
-            start = (random.randrange(1, rows), random.randrange(1, rows))
+            start = (random.randrange(1, columns), random.randrange(1, rows))
             foo = food(start)
             foo.draw_square()
             score += 10
