@@ -1,5 +1,5 @@
 # Kyle Arrowood
-# 5/15/2020
+# 5/17/2020
 # Snake_Game
 
 import pygame
@@ -144,10 +144,10 @@ class difficulty_message:
         button3 = Button(window, text = "Hard", command = hard_cb)
         button4 = Button(window, text = "Extreme", command = extreme_cb)
         label.pack()
-        button1.pack()
-        button2.pack()
-        button3.pack()
-        button4.pack()
+        button1.pack(side = LEFT, padx = 5, pady = 10)
+        button2.pack(side = LEFT, padx = 5, pady = 10)
+        button3.pack(side = LEFT, padx = 5, pady = 10)
+        button4.pack(side = LEFT, padx = 5, pady = 10)
         window.mainloop()
 def goodbye_message(score):
     window = Tk()
@@ -164,8 +164,8 @@ def goodbye_message(score):
     yes = Button(window, text = "Yes", command = yes_cb)
     no = Button(window, text = "No", command = no_cb)
     label.pack()
-    yes.pack()
-    no.pack()
+    yes.pack(side = LEFT, padx = 30, pady = 10)
+    no.pack(side = LEFT, padx = 5, pady = 10)
     window.mainloop()
 def main():
     score = 0
