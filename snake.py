@@ -1,6 +1,9 @@
 # Kyle Arrowood
 # 5/17/2020
-# Snake_Game
+# Snake Game
+# This is my version of a popular game known as snake. One of the main
+# additions was the different difficulties, and the amount that the snake
+# grows when passing through the food object.
 
 import pygame
 import random
@@ -23,7 +26,8 @@ class food:
         length = width / columns
         x = self.starting_point[0]
         y = self.starting_point[1]
-        pygame.draw.rect(window, (255, 0, 0), (int(x * length), int(y * length), int(length), int(length)))
+        pygame.draw.rect(window, (255, 0, 0), (int(x * length),
+                        int(y * length), int(length), int(length)))
 class square:
     def __init__(self, point, x_direction=1, y_direction=0):
         self.point = point
@@ -33,11 +37,13 @@ class square:
         length = width / columns
         x = self.point[0]
         y = self.point[1]
-        pygame.draw.rect(window, (0, 100, 0), (int(x * length), int(y * length), int(length), int(length)))
+        pygame.draw.rect(window, (0, 100, 0), (int(x * length),
+                        int(y * length), int(length), int(length)))
     def move_square(self, x_direction, y_direction):
         self.x_direction = x_direction
         self.y_direction = y_direction
-        self.point = (self.point[0] + self.x_direction, self.point[1] + self.y_direction)
+        self.point = (self.point[0] + self.x_direction,
+                    self.point[1] + self.y_direction)
 class snake:
     def __init__(self, head):
         self.head = head
@@ -56,19 +62,23 @@ class snake:
                 if pressed[pygame.K_LEFT]:
                     self.x_direction = -1
                     self.y_direction = 0
-                    self.turn_points[self.head.point] = [self.x_direction, self.y_direction]
+                    self.turn_points[self.head.point] = [self.x_direction,
+                                                        self.y_direction]
                 elif pressed[pygame.K_RIGHT]:
                     self.x_direction = 1
                     self.y_direction = 0
-                    self.turn_points[self.head.point] = [self.x_direction, self.y_direction]
+                    self.turn_points[self.head.point] = [self.x_direction,
+                                                        self.y_direction]
                 elif pressed[pygame.K_UP]:
                     self.x_direction = 0
                     self.y_direction = -1
-                    self.turn_points[self.head.point] = [self.x_direction, self.y_direction]
+                    self.turn_points[self.head.point] = [self.x_direction,
+                                                        self.y_direction]
                 elif pressed[pygame.K_DOWN]:
                     self.x_direction = 0
                     self.y_direction = 1
-                    self.turn_points[self.head.point] = [self.x_direction, self.y_direction]
+                    self.turn_points[self.head.point] = [self.x_direction,
+                                                        self.y_direction]
         for i, sq in enumerate(self.body):
             position = sq.point
             # Checks to see if the specific body link is in turn_points,
@@ -76,7 +86,7 @@ class snake:
             if position in self.turn_points:
                 change_dir = self.turn_points[position]
                 sq.move_square(change_dir[0], change_dir[1])
-                # Removes turn from turn_points list after all links have gone through
+                # Removes turn from turn_points after all links have passed
                 if i == len(self.body) - 1:
                     self.turn_points.pop(position)
             else:
@@ -85,9 +95,9 @@ class snake:
                     if self.body[0].point == self.body[j].point:
                         goodbye_message(score)
                 # Checks if snake hits edges
-                if sq.x_direction == -1 and sq.point[0] <= 0: # Left Wall
+                if sq.x_direction == -1 and sq.point[0] <= 0:
                     goodbye_message(score)
-                elif sq.x_direction == 1 and sq.point[0] >= columns - 1: # Right Wall
+                elif sq.x_direction == 1 and sq.point[0] >= columns - 1:
                     goodbye_message(score)
                 elif sq.y_direction == 1 and sq.point[1] >= rows - 1:
                     goodbye_message(score)
@@ -100,13 +110,17 @@ class snake:
     def add_link(self):
         tail = self.body[-1]
         if tail.x_direction == 1 and tail.y_direction == 0: # Going Right
-            self.body.append(square((tail.point[0] - 1, tail.point[1]), tail.x_direction, tail.y_direction))
+            self.body.append(square((tail.point[0] - 1, tail.point[1]),
+                            tail.x_direction, tail.y_direction))
         elif tail.x_direction == -1 and tail.y_direction == 0: # Going Left
-            self.body.append(square((tail.point[0] + 1, tail.point[1]), tail.x_direction, tail.y_direction))
+            self.body.append(square((tail.point[0] + 1, tail.point[1]),
+                            tail.x_direction, tail.y_direction))
         elif tail.x_direction == 0 and tail.y_direction == 1: # Going Down
-            self.body.append(square((tail.point[0], tail.point[1] - 1), tail.x_direction, tail.y_direction))
+            self.body.append(square((tail.point[0], tail.point[1] - 1),
+                            tail.x_direction, tail.y_direction))
         elif tail.x_direction == 0 and tail.y_direction == -1: # Going Up
-            self.body.append(square((tail.point[0], tail.point[1] + 1), tail.x_direction, tail.y_direction))
+            self.body.append(square((tail.point[0], tail.point[1] + 1),
+                            tail.x_direction, tail.y_direction))
     def draw_snake(self):
         for sq in self.body:
             sq.draw_square()
@@ -152,7 +166,8 @@ class difficulty_message:
 def goodbye_message(score):
     window = Tk()
     window.title("Game Over!")
-    label = Label(window, text = "You scored: " + str(score) + "\nDo you want to play again?")
+    label = Label(window, text = "You scored: " + str(score) +
+                "\nDo you want to play again?")
     def yes_cb():
         window.destroy()
         main()
@@ -198,6 +213,7 @@ def main():
             foo = food(start)
             foo.draw_square()
             score += 10
-            pygame.display.set_caption("Snake: " + dif.message + " Score: " + str(score))
+            pygame.display.set_caption("Snake: " + dif.message + " Score: " +
+                                    str(score))
         refresh(foo, sn)
 main()
