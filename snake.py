@@ -1,9 +1,8 @@
 # Kyle Arrowood
 # 5/17/2020
 # Snake Game
-# This is my version of a popular game known as snake. One of the main
-# additions was the different difficulties, and the amount that the snake
-# grows when passing through the food object.
+# This is my version of a popular game known as snake.
+
 
 import pygame
 import random
@@ -129,40 +128,6 @@ def refresh(food, snake):
     food.draw_square()
     snake.draw_snake()
     pygame.display.update()
-class difficulty_message:
-    def __init__(self):
-        self.speed = 0
-        self.message = ""
-    def show_window(self):
-        window = Tk()
-        window.title("Choose a difficult:")
-        label = Label(window, text = "Choose a difficulty:")
-        def easy_cb():
-            self.speed = 20
-            self.message = "Easy"
-            window.destroy()
-        def medium_cb():
-            self.speed = 30
-            self.message = "Medium"
-            window.destroy()
-        def hard_cb():
-            self.speed = 45
-            self.message = "Hard"
-            window.destroy()
-        def extreme_cb():
-            self.speed = 100
-            self.message = "Extreme"
-            window.destroy()
-        button1 = Button(window, text = "Easy", command = easy_cb)
-        button2 = Button(window, text = "Medium", command = medium_cb)
-        button3 = Button(window, text = "Hard", command = hard_cb)
-        button4 = Button(window, text = "Extreme", command = extreme_cb)
-        label.pack()
-        button1.pack(side = LEFT, padx = 5, pady = 10)
-        button2.pack(side = LEFT, padx = 5, pady = 10)
-        button3.pack(side = LEFT, padx = 5, pady = 10)
-        button4.pack(side = LEFT, padx = 5, pady = 10)
-        window.mainloop()
 def goodbye_message(score):
     window = Tk()
     window.title("Game Over!")
@@ -172,7 +137,6 @@ def goodbye_message(score):
         window.destroy()
         main()
     def no_cb():
-        mb.showinfo("Goodbye!", "Thanks for playing!")
         pygame.quit()
         window.destroy()
         quit()
@@ -182,6 +146,7 @@ def goodbye_message(score):
     yes.pack(side = LEFT, padx = 30, pady = 10)
     no.pack(side = LEFT, padx = 5, pady = 10)
     window.mainloop()
+    
 def main():
     score = 0
     pygame.display.set_caption("Snake Game!")
@@ -196,24 +161,26 @@ def main():
     head = square(point)
     sn = snake(head)
     sn.draw_snake()
-    # Shows difficulty message and assigns speed
-    dif = difficulty_message()
-    dif.show_window()
     # Game Loop
     clock = pygame.time.Clock()
+    #Tk().wm_withdraw()
+    #mb.showinfo("Hello!", "Press OK to begin!")
+    
     running = True
     while running:
         pygame.time.delay(10)
-        clock.tick(dif.speed)
+        clock.tick(20)
         sn.move_snake(score)
         if sn.body[0].point == foo.starting_point:
-            for i in range(10):
+            for i in range(5):
                 sn.add_link()
             start = (random.randrange(1, columns), random.randrange(1, rows))
+            while square(start) in sn.body:
+                start = (random.randrange(1, columns), random.randrange(1, rows))
             foo = food(start)
             foo.draw_square()
             score += 10
-            pygame.display.set_caption("Snake: " + dif.message + " Score: " +
+            pygame.display.set_caption("Snake: " + " Score: " +
                                     str(score))
         refresh(foo, sn)
 main()
